@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './assets/little-lemon-logo.png'; // Adjust the path as needed
+import logo from '../assets/logo192.png'; // Adjust the path as needed
 
 function Header() {
     return (

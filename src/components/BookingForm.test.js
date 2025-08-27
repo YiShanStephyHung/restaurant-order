@@ -1,35 +1,33 @@
-// import { render, screen } from "@testing-library/react";
-// import BookingForm from './BookingForm';
+import { render, screen, fireEvent } from '@testing-library/react';
+import BookingForm from './BookingForm';
 
-// test('Renders the BookingForm heading', () => {
-//     render(<BookingForm />);
-//     const headingElement = screen.getByText("Book Now");
-//     expect(headingElement).toBeInTheDocument();
-// })
+const dummyProps = {
+  availableTimes: ['18:00', '19:00'],
+  dispatch: jest.fn(),
+  submitForm: jest.fn(),
+};
 
-// Main.test.js (or BookingUtils.test.js, depending on where functions live)
-import { initializeTimes, updateTimes } from './Main'; // or wherever they are defined
-import { fetchAPI } from './api';
-
-jest.mock('./api');
-
-test('initializeTimes calls fetchAPI for today', () => {
-  const mockTimes = ['17:00', '18:00'];
-  fetchAPI.mockReturnValue(mockTimes);
-
-  const result = initializeTimes();
-
-  expect(fetchAPI).toHaveBeenCalled();
-  expect(result).toEqual(mockTimes);
+test('submit button is disabled when fields are empty or invalid', () => {
+  render(<BookingForm {...dummyProps} />);
+  const submitButton = screen.getByRole('button', { name: /book/i });
+  expect(submitButton).toBeDisabled();
 });
 
-test('updateTimes calls fetchAPI with date and returns times', () => {
-  const mockTimes = ['19:00', '20:00'];
-  fetchAPI.mockReturnValue(mockTimes);
+test('submit button is enabled when form is valid', () => {
+  render(<BookingForm {...dummyProps} />);
 
-  const action = { type: 'update_times', date: '2025-08-27' };
-  const result = updateTimes([], action);
+  fireEvent.change(screen.getByLabelText(/choose date/i), {
+    target: { value: new Date().toISOString().split('T')[0] },
+  });
 
-  expect(fetchAPI).toHaveBeenCalledWith(new Date(action.date));
-  expect(result).toEqual(mockTimes);
+  fireEvent.change(screen.getByLabelText(/choose time/i), {
+    target: { value: '18:00' },
+  });
+
+  fireEvent.change(screen.getByLabelText(/number of guests/i), {
+    target: { value: '2' },
+  });
+
+  const submitButton = screen.getByRole('button', { name: /book/i });
+  expect(submitButton).toBeEnabled();
 });

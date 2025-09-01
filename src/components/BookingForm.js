@@ -45,11 +45,14 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ display: 'grid', maxWidth: '200px', gap: '20px' }} aria-label="Booking Form">
-            <label htmlFor="res-date">Choose date</label>
+        <form onSubmit={handleSubmit} className="booking-form" style={{ display: 'grid', maxWidth: '200px', gap: '20px' }} aria-label="Booking Form">
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" required />
+
+            <label htmlFor="date">Date:</label>
             <input
                 type="date"
-                id="res-date"
+                id="date"
                 name="reservation-date"
                 value={selectedDate}
                 onChange={handleDateChange}
@@ -58,9 +61,9 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                 aria-required="true"
             />
 
-            <label htmlFor="res-time">Choose time</label>
+            <label htmlFor="time">Time:</label>
             <select
-                id="res-time"
+                id="time"
                 name="reservation-time"
                 value={selectedTime}
                 onChange={handleTimeChange}
@@ -73,10 +76,10 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                 ))}
             </select>
 
-            <label htmlFor="res-guests">Number of guests</label>
+            <label htmlFor="guests">Number of Guests:</label>
             <input
                 type="number"
-                id="res-guests"
+                id="guests"
                 name="guests"
                 value={guests}
                 onChange={handleGuestsChange}
@@ -85,7 +88,7 @@ function BookingForm({ availableTimes, dispatch, submitForm }) {
                 max={10} // optional max guests limit
             />
 
-            <button type="submit" disabled={!isValid} aria-label="On Click">Book</button>
+            <button type="submit" className="btn-primary" disabled={!isValid} aria-label="On Click">Book Now</button>
         </form>
     );
 }

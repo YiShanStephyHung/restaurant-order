@@ -1,22 +1,27 @@
-import './App.css';
-import Header from './components/Header';
-import Nav from './components/Nav';
-import Main from './components/Main';
-import Footer from './components/Footer';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import BookingPage from './components/BookingPage';
-import ConfirmedBooking from './components/ConfirmedBooking';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+
+import Home from './pages/Home';
+import Menu from './pages/Menu';
+import Booking from './pages/Booking';
+import Confirmed from './pages/Confirmed';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
   return (
-    <div className="app">
-      <Header />
-      <Nav />
+    <div className="App">
+      <Navbar />
       <Routes>
-        <Route path="/booking" element={<BookingPage />} />
-        <Route path="/booking-confirmed" element={<ConfirmedBooking />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/booking-confirmed" element={<Confirmed />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Main />
       <Footer />
     </div>
   );
